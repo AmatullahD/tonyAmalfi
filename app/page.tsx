@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react";
-import Header from "@/components/Header"
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button"
 import { getProducts, Product } from "@/lib/services/products"
@@ -17,12 +16,27 @@ const journalBanners = [
 ];
 
 const banners = [
-  { id: 1, image: "/featured-outdoor.jpg" },
-  { id: 2, image: "/journal-1.jpg" },
-  { id: 3, image: "/featured-trouser.jpg" },
-  { id: 4, image: "/journal-2.jpg" },
-  { id: 5, image: "/journal-3.jpg" },
-  { id: 6, image: "/journal-4.jpg" },
+  {
+    id: 1,
+    image: "/hero-banner-1.jpg",
+    title: "TRENDING T-SHIRTS",
+    subtitle: "EXPLORE THE COLLECTION",
+    href: "/shop",
+  },
+  {
+    id: 2,
+    image: "/hero-banner-2.jpg",
+    title: "TIMELESS POLOS",
+    subtitle: "EXPLORE THE COLLECTION",
+    href: "/shop",
+  },
+  {
+    id: 3,
+    image: "/hero-banner-3.jpg",
+    title: "EVERYDAY BOTTOMWEAR",
+    subtitle: "EXPLORE THE COLLECTION",
+    href: "/shop",
+  },
 ];
 
 
@@ -139,45 +153,91 @@ export default function Home() {
     <div className="min-h-screen flex flex-col pt-16">
       
       <br></br>
-      {/* Hero Section  */}
-      <section className="w-full px-4 md:px-8 my-10">
+      {/* Hero Section - Split Layout */}
+      <section className="w-full bg-[#f5f5f5] overflow-hidden">
+        <div className="relative">
+          {/* SLIDER TRACK */}
+          <div
+            ref={bannerRef}
+            className="flex overflow-hidden"
+          >
+            {banners.map((item) => (
+              <div key={item.id} className="min-w-full flex-shrink-0">
+                <div className="flex flex-col md:flex-row items-center min-h-[340px] md:min-h-[420px]">
 
-        {/* SLIDER */}
-        <div
-          ref={bannerRef}
-          className="flex overflow-hidden rounded-2xl"
-        >
-          {banners.map((item) => (
-            <div key={item.id} className="min-w-full flex-shrink-0">
+                  {/* LEFT: Text */}
+                  <div className="flex flex-col items-start justify-center px-8 md:px-16 py-10 md:py-0 md:w-[38%] flex-shrink-0 z-10">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-black leading-tight mb-3 uppercase">
+                      {item.title}
+                    </h1>
+                    <Link href={item.href}>
+                      <span className="text-sm md:text-base font-semibold tracking-widest text-black uppercase border-b-2 border-black pb-0.5 hover:opacity-70 transition-opacity cursor-pointer">
+                        {item.subtitle}
+                      </span>
+                    </Link>
+                  </div>
 
-              <div className="relative w-full h-[300px] md:h-[500px] overflow-hidden">
+                  {/* RIGHT: Image */}
+                  <div className="md:w-[62%] w-full h-[260px] md:h-[420px] flex-shrink-0 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-contain object-center"
+                    />
+                  </div>
 
-                {/* IMAGE */}
-                <img
-                  src={item.image}
-                  alt="banner"
-                  className="w-full h-full object-contain"
-                />
-
+                </div>
               </div>
+            ))}
+          </div>
 
-            </div>
-          ))}
+          {/* LEFT ARROW */}
+          <button
+            onClick={() => {
+              const prev = activeBanner === 0 ? banners.length - 1 : activeBanner - 1;
+              setActiveBanner(prev);
+              if (bannerRef.current) {
+                bannerRef.current.scrollTo({ left: prev * bannerRef.current.offsetWidth, behavior: "smooth" });
+              }
+            }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow-md transition"
+            aria-label="Previous"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+
+          {/* RIGHT ARROW */}
+          <button
+            onClick={() => {
+              const next = activeBanner === banners.length - 1 ? 0 : activeBanner + 1;
+              setActiveBanner(next);
+              if (bannerRef.current) {
+                bannerRef.current.scrollTo({ left: next * bannerRef.current.offsetWidth, behavior: "smooth" });
+              }
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow-md transition"
+            aria-label="Next"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
 
         {/* DOTS */}
-        <div className="flex justify-center mt-4 gap-2">
+        <div className="flex justify-center py-3 gap-2">
           {banners.map((_, i) => (
-            <div
+            <button
               key={i}
-              className={`h-2 w-2 rounded-full transition-all ${activeBanner === i
-                  ? "bg-black scale-125"
-                  : "bg-gray-300"
-                }`}
+              onClick={() => {
+                setActiveBanner(i);
+                if (bannerRef.current) {
+                  bannerRef.current.scrollTo({ left: i * bannerRef.current.offsetWidth, behavior: "smooth" });
+                }
+              }}
+              className={`h-2 rounded-full transition-all duration-300 ${activeBanner === i ? "w-6 bg-black" : "w-2 bg-gray-300"}`}
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
-
       </section>
 
 

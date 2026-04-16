@@ -87,6 +87,56 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* EMAIL SUBSCRIBE */}
+          <div style={{ marginBottom: "25px" }}>
+            <p style={{
+              fontSize: "18px",
+              marginBottom: "10px",
+              color: "#0f0d0d",
+              fontWeight: "bolder"
+            }}>
+              Subscribe to our emails
+            </p>
+
+            <div style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+              flexWrap: "wrap"
+            }}>
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                style={{
+                  padding: "10px 14px",
+                  width: "260px",
+                  maxWidth: "100%",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                  outline: "none",
+                  fontSize: "14px"
+                }}
+              />
+
+              <button
+                style={{
+                  padding: "10px 18px",
+                  backgroundColor: "black",
+                  color: "white",
+                  borderRadius: "6px",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "14px"
+                }}
+              >
+                Subscribe
+              </button>
+
+            </div>
+          </div>
+
           {/* PAYMENTS */}
           <div style={{ marginBottom: "20px" }}>
             <p style={{ fontSize: "18px", marginBottom: "10px", color: "#0f0d0d", fontWeight: "bolder" }}>
@@ -133,19 +183,63 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* FOOTER */}
-          <p style={{ fontSize: "13px", color: "#555" }}>
-            © TONY AMALFI
-          </p>
-
         </div>
 
       </div>
 
 
-      {/* BOTTOM */}
-      <div className="mt-10 border-t pt-5 text-center text-sm">
-        © 2026 Tony Amalfi. All rights reserved.
+      {/* BLACK FOOTER SECTION */}
+      <div className="bg-black text-white mt-10">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+
+            {/* CUSTOMER CARE */}
+            <div>
+              <h3 className="text-sm font-semibold tracking-widest mb-4 uppercase text-gray-300">
+                Customer Care
+              </h3>
+
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li>FAQ</li>
+                <li>Shipping</li>
+                <li>Returns</li>
+                <li>Contact Us</li>
+              </ul>
+            </div>
+
+            {/* OUR COMPANY */}
+            <div>
+              <h3 className="text-sm font-semibold tracking-widest mb-4 uppercase text-gray-300">
+                Our Company
+              </h3>
+
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li>About Tony Amalfi</li>
+                <li>Brand</li>
+              </ul>
+            </div>
+
+            {/* LEGAL */}
+            <div>
+              <h3 className="text-sm font-semibold tracking-widest mb-4 uppercase text-gray-300">
+                Legal
+              </h3>
+
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li>Terms of Service</li>
+                <li>Privacy Policy</li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* FINAL COPYRIGHT */}
+          <div className="border-t border-gray-800 mt-10 pt-5 text-center text-xs text-gray-500">
+            © 2026 Tony Amalfi. All rights reserved.
+          </div>
+
+        </div>
       </div>
 
 
