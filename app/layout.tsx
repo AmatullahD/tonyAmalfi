@@ -64,7 +64,7 @@ export default function RootLayout({
           <CartProvider>
             <FirebaseInitializer />
 
-            <div className="fixed top-0 left-0 w-full z-50 bg-white">
+            <div className="w-full bg-white">
               <Header />
             </div>
 

@@ -15,7 +15,7 @@ import Link from "next/link"
 import { X, Plus, Upload, Trash2 } from "lucide-react"
 
 export default function EditProductPage() {
-  const [session, setSession] = useState<{ username: string } | null>(null)
+  const [session, setSession] = useState<{ uid: string; email: string } | null>(null)
   const router = useRouter()
   const params = useParams()
   const productId = params.id as string
@@ -52,13 +52,16 @@ export default function EditProductPage() {
   ])
 
   useEffect(() => {
-    const adminSession = getAdminSession()
-    if (!adminSession) {
-      router.push("/admin/login")
-    } else {
-      setSession(adminSession)
-      loadProduct()
+    const checkSession = async () => {
+      const adminSession = await getAdminSession()
+      if (!adminSession) {
+        router.push("/admin/login")
+      } else {
+        setSession(adminSession)
+        loadProduct()
+      }
     }
+    checkSession()
   }, [router, productId])
 
   const loadProduct = async () => {

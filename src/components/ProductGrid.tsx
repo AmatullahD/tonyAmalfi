@@ -3,44 +3,55 @@
 import React from "react";
 import Image from "next/image";
 
-const images: string[] = [
-  "/collection-outerwear.jpg",
-  "/collection-pants.jpg",
-  "/collection-pants.jpg",
-  "/collection-outerwear.jpg",
+const categories = [
+  { image: "/collection-outerwear.jpg", name: "Outerwear" },
+  { image: "/collection-pants.jpg", name: "Pants" },
+  { image: "/collection-pants.jpg", name: "Jeans" },
+  { image: "/collection-outerwear.jpg", name: "Jackets" },
 ];
 
 
 export default function ProductGrid() {
   return (
-    <div className="w-full max-w-lg mx-auto p-2">
+    <div className="w-full max-w-sm mx-auto p-2">
 
       {/* ✅ MOBILE VIEW */}
-      <div className="grid grid-cols-2 gap-2 md:hidden">
-        {images.map((img, index) => (
-          <div key={index}>
+      <div className="grid grid-cols-2 gap-1 md:hidden">
+        {categories.map((item, index) => (
+          <div key={index} className="flex flex-col">
             <img
-              src={img}
-              alt={`product-${index}`}
+              src={item.image}
+              alt={item.name}
               className="w-full h-full object-cover rounded-lg"
             />
+
+            {/* Category Name */}
+            <p className="text-xs text-center mt-1 font-medium">
+              {item.name}
+            </p>
           </div>
         ))}
       </div>
 
       {/* ✅ DESKTOP VIEW */}
-      <div className="hidden md:grid grid-cols-2 gap-2">
-        {images.map((img: string, index: number) => (
-          <div
-            key={index}
-            className="relative aspect-square w-full overflow-hidden rounded-lg"
-            >
-            <Image
-              src={img}
-              alt={`product-${index}`}
-              fill
-              className="object-cover"
-            />
+      <div className="hidden md:grid grid-cols-2 gap-1">
+        {categories.map((item, index) => (
+          <div key={index} className="flex flex-col">
+
+            <div className="relative aspect-square w-full overflow-hidden rounded-lg">
+              <Image
+                src={item.image}
+                alt={item.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Category Name */}
+            <p className="text-sm text-center mt-2 font-medium">
+              {item.name}
+            </p>
+
           </div>
         ))}
       </div>

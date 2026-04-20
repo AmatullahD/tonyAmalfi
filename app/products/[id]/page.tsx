@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "next/navigation"
-import { Header } from "@/components/Header"
 import Footer from "@/components/Footer"
 import { getProductById, Product } from "@/lib/services/products"
 import { useCart } from "@/app/providers"
 import { Button } from "@/components/ui/button"
+import ReviewSection from "@/src/components/ReviewSection";
 
 export default function ProductPage() {
   const params = useParams()
@@ -23,6 +23,7 @@ export default function ProductPage() {
   const [hoveredSize, setHoveredSize] = useState<string | null>(null)
   const [showSizeChart, setShowSizeChart] = useState(false)
   const [addedToCart, setAddedToCart] = useState(false)
+  const [showFullDesc, setShowFullDesc] = useState(false)
 
   // For swipe/pointer handling
   const [pointerStartX, setPointerStartX] = useState<number | null>(null)
@@ -34,7 +35,7 @@ export default function ProductPage() {
         setLoading(true)
         const fetchedProduct = await getProductById(productId)
         setProduct(fetchedProduct)
-        
+
         if (fetchedProduct) {
           if (fetchedProduct.colors && fetchedProduct.colors.length > 0) {
             setSelectedColor(fetchedProduct.colors[0].name)
@@ -71,13 +72,13 @@ export default function ProductPage() {
 
   const handleAddToCart = () => {
     if (!product) return
-    
+
     const availableStock = getAvailableStock()
     if (quantity > availableStock) {
       alert(`Only ${availableStock} units available for size ${selectedSize}`)
       return
     }
-    
+
     addItem({
       id: `${product.id}-${selectedColor}-${selectedSize}`,
       productId: product.id,
@@ -88,7 +89,7 @@ export default function ProductPage() {
       quantity,
       image: product.images?.[0]
     })
-    
+
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2000)
   }
@@ -102,7 +103,7 @@ export default function ProductPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+      
         <main className="flex-1 flex items-center justify-center">
           <p className="text-lg">Loading product...</p>
         </main>
@@ -114,7 +115,7 @@ export default function ProductPage() {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col">
-        <Header />
+      
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Product not found</h1>
@@ -174,7 +175,7 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Header />
+    
 
       <main className="flex-1 container mx-auto px-4 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -230,7 +231,7 @@ export default function ProductPage() {
           {/* Product Info */}
           <div className="lg:sticky lg:top-8 lg:h-fit">
             <h1 className="text-3xl lg:text-4xl font-bold mb-4">{product.title}</h1>
-            
+
             {/* Price */}
             <div className="flex items-center gap-3 mb-2">
               <p className="text-3xl font-bold">₹{product.discountedPrice.toFixed(2)}</p>
@@ -241,7 +242,7 @@ export default function ProductPage() {
                 (₹{(product.originalPrice - product.discountedPrice).toFixed(0)} OFF)
               </span>
             </div>
-            
+
             <p className="text-sm text-green-600 mb-6">inclusive of all taxes</p>
 
             {/* Color Selection */}
@@ -255,9 +256,8 @@ export default function ProductPage() {
                     <button
                       key={color.name}
                       onClick={() => setSelectedColor(color.name)}
-                      className={`w-10 h-10 rounded-full border-2 transition-all ${
-                        selectedColor === color.name ? "border-black scale-110 ring-2 ring-offset-2 ring-black" : "border-gray-300"
-                      }`}
+                      className={`w-10 h-10 rounded-full border-2 transition-all ${selectedColor === color.name ? "border-black scale-110 ring-2 ring-offset-2 ring-black" : "border-gray-300"
+                        }`}
                       style={{ backgroundColor: color.hex }}
                       title={color.name}
                     />
@@ -278,14 +278,14 @@ export default function ProductPage() {
                     SIZE CHART →
                   </button>
                 </div>
-                
+
                 {/* Wrapper with relative positioning and overflow visible */}
                 <div className="relative">
                   <div className="flex gap-3 flex-wrap">
                     {product.sizeDetails.map((sizeDetail, index) => {
                       const isOutOfStock = isSizeOutOfStock(sizeDetail.size)
                       const isFirstSize = index === 0
-                      
+
                       return (
                         <div key={sizeDetail.size} className="relative">
                           <button
@@ -293,13 +293,12 @@ export default function ProductPage() {
                             onMouseEnter={() => setHoveredSize(sizeDetail.size)}
                             onMouseLeave={() => setHoveredSize(null)}
                             disabled={isOutOfStock}
-                            className={`w-14 h-14 rounded-full border-2 font-semibold transition-all relative ${
-                              isOutOfStock
-                                ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
-                                : selectedSize === sizeDetail.size
+                            className={`w-14 h-14 rounded-full border-2 font-semibold transition-all relative ${isOutOfStock
+                              ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
+                              : selectedSize === sizeDetail.size
                                 ? "border-black bg-black text-white"
                                 : "border-gray-300 hover:border-gray-500"
-                            }`}
+                              }`}
                           >
                             {sizeDetail.size}
                             {isOutOfStock && (
@@ -311,16 +310,15 @@ export default function ProductPage() {
 
                           {/* Size Measurements Tooltip - FIXED positioning */}
                           {hoveredSize === sizeDetail.size && !isOutOfStock && (
-                            <div 
-                              className={`absolute z-10 top-full mt-2 bg-white border border-gray-200 shadow-xl rounded-lg p-4 w-56 animate-in fade-in slide-in-from-top-2 duration-200 ${
-                                isFirstSize ? 'left-0' : 'left-1/2 -translate-x-1/2'
-                              }`}
-                              style={{ 
+                            <div
+                              className={`absolute z-10 top-full mt-2 bg-white border border-gray-200 shadow-xl rounded-lg p-4 w-56 animate-in fade-in slide-in-from-top-2 duration-200 ${isFirstSize ? 'left-0' : 'left-1/2 -translate-x-1/2'
+                                }`}
+                              style={{
                                 maxWidth: 'calc(100vw - 2rem)',
                               }}
                             >
                               <p className="font-semibold mb-2 text-center border-b pb-2">Size {sizeDetail.size}</p>
-                              
+
                               <div className="space-y-2 text-sm">
                                 {sizeDetail.measurements.map((measurement, idx) => (
                                   <div key={idx} className="flex justify-between">
@@ -336,7 +334,7 @@ export default function ProductPage() {
                     })}
                   </div>
                 </div>
-                
+
                 {/* Stock indicator for selected size */}
                 {selectedSize && (
                   <div className="mt-3">
@@ -387,46 +385,64 @@ export default function ProductPage() {
             </Button>
 
             {/* Product Details */}
-           
 
-{/* Product Details */}
-<div className="border-t mt-8 pt-6 space-y-6">
-  <div>
-    <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Description</h3>
-    <p className="text-sm text-gray-700 leading-relaxed">{product.description}</p>
-  </div>
 
-  {/* Only show Materials section if it exists and is not empty */}
-  {product.materials && product.materials.trim() && (
-    <div>
-      <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Materials</h3>
-      <p className="text-sm text-gray-700">{product.materials}</p>
-    </div>
-  )}
+            {/* Product Details */}
+            <div className="border-t mt-8 pt-6 space-y-6">
+              <div>
+                <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Description</h3>
 
-  {/* Only show Care Instructions section if it exists and is not empty */}
-  {product.care && product.care.trim() && (
-    <div>
-      <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Care Instructions</h3>
-      <p className="text-sm text-gray-700">{product.care}</p>
-    </div>
-  )}
+                <p
+                  className={`text-sm text-gray-700 leading-relaxed md:line-clamp-none overflow-hidden ${showFullDesc ? "" : "max-h-[4.5em]"
+                    }`}
+                >
+                  {product.description}
+                </p>
 
-  {product.tags && product.tags.length > 0 && (
-    <div>
-      <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Tags</h3>
-      <div className="flex flex-wrap gap-2">
-        {product.tags.map((tag, index) => (
-          <span key={index} className="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  )}
-</div>
+                <button
+                  onClick={() => setShowFullDesc(!showFullDesc)}
+                  className="text-sm text-black font-semibold mt-2 md:hidden"
+                >
+                  {showFullDesc ? "READ LESS" : "READ MORE"}
+                </button>
+              </div>
+
+              {/* Only show Materials section if it exists and is not empty */}
+              {product.materials && product.materials.trim() && (
+                <div>
+                  <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Materials</h3>
+                  <p className="text-sm text-gray-700">{product.materials}</p>
+                </div>
+              )}
+
+              {/* Only show Care Instructions section if it exists and is not empty */}
+              {product.care && product.care.trim() && (
+                <div>
+                  <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Care Instructions</h3>
+                  <p className="text-sm text-gray-700">{product.care}</p>
+                </div>
+              )}
+
+              {product.tags && product.tags.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {product.tags.map((tag, index) => (
+                      <span key={index} className="bg-gray-100 px-3 py-1 rounded-full text-xs font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        {/* ⭐ REVIEW SECTION */}
+        <div className="mt-16">
+          <ReviewSection />
+        </div>
+        
       </main>
 
       {/* Image Zoom Modal (swipable + keyboard nav + arrows) */}
@@ -453,7 +469,7 @@ export default function ProductPage() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Left arrow */}
-            
+
 
             {/* Image */}
             <img
@@ -464,7 +480,7 @@ export default function ProductPage() {
             />
 
             {/* Right arrow */}
-            
+
 
             {/* Dots */}
             {product.images.length > 1 && (
@@ -473,9 +489,8 @@ export default function ProductPage() {
                   <button
                     key={index}
                     onClick={(e) => { e.stopPropagation(); setSelectedImage(index) }}
-                    className={`w-3 h-3 rounded-full transition-all ${
-                      selectedImage === index ? "bg-white w-8" : "bg-white/50"
-                    }`}
+                    className={`w-3 h-3 rounded-full transition-all ${selectedImage === index ? "bg-white w-8" : "bg-white/50"
+                      }`}
                   />
                 ))}
               </div>
@@ -500,13 +515,13 @@ export default function ProductPage() {
                 ×
               </button>
             </div>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full border-collapse">
                 <thead>
                   <tr className="bg-gray-100">
                     <th className="border border-gray-300 px-4 py-3 text-left font-bold">Size</th>
-                    
+
                     {product.sizeDetails[0]?.measurements.map((measurement) => (
                       <th key={measurement.name} className="border border-gray-300 px-4 py-3 text-left font-bold">
                         {measurement.name}
@@ -518,7 +533,7 @@ export default function ProductPage() {
                   {product.sizeDetails.map((sizeDetail) => (
                     <tr key={sizeDetail.size} className="hover:bg-gray-50">
                       <td className="border border-gray-300 px-4 py-3 font-bold text-lg">{sizeDetail.size}</td>
-                      
+
                       {sizeDetail.measurements.map((measurement) => (
                         <td key={measurement.name} className="border border-gray-300 px-4 py-3">
                           {measurement.value}
@@ -529,7 +544,7 @@ export default function ProductPage() {
                 </tbody>
               </table>
             </div>
-            
+
             <div className="mt-6 text-sm text-gray-600">
               <p className="font-semibold mb-2">How to measure:</p>
               <ul className="list-disc list-inside space-y-1">

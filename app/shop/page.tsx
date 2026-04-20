@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Header } from "@/components/Header"
 import Footer from "@/components/Footer"
 import { ProductCard } from "@/components/ProductCard"
 import { getProducts, Product } from "@/lib/services/products"
@@ -33,7 +32,7 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
+     
 
       <main className="flex-1">
         {/* Shop Header */}

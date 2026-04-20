@@ -138,48 +138,64 @@ export default function Footer() {
           </div>
 
           {/* PAYMENTS */}
-          <div style={{ marginBottom: "20px" }}>
-            <p style={{ fontSize: "18px", marginBottom: "10px", color: "#0f0d0d", fontWeight: "bolder" }}>
-              100% Secure Payment:
+          <div style={{ marginBottom: "20px", textAlign: "center" }}>
+            <p
+              style={{
+                fontSize: "18px",
+                marginBottom: "12px",
+                color: "#0f0d0d",
+                fontWeight: "600",
+                letterSpacing: "0.5px"
+              }}
+            >
+              100% Secure Payment
             </p>
 
-            <div style={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              gap: "12px",
-              fontSize: "15px",
-              color: "#333",
-              fontWeight: "500",
-              fontStyle: "italic"
-            }}>
-              <span>RazorPay</span>
-              <span>PhonePay</span>
-              <span>Google Pay</span>
-              <span>Master Card</span>
-              <span>Paytm</span>
-              <span>CRED</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "nowrap",
+                gap: "18px",
+                alignItems: "center"
+              }}
+            >
+              <img src="/razorpay-logo.png" style={{ height: "26px" }} />
+              <img src="/phonepe-logo.png" style={{ height: "26px" }} />
+              <img src="/gpay-logo.png" style={{ height: "26px" }} />
+              <img src="/mastercard-logo.jpg" style={{ height: "26px" }} />
+              <img src="/paytm-logo.jpg" style={{ height: "26px" }} />
+              <img src="/cred-logo.png" style={{ height: "26px" }} />
             </div>
           </div>
 
           {/* SHIPPING PARTNERS */}
-          <div style={{ marginBottom: "15px" }}>
-            <p style={{ fontSize: "18px", marginBottom: "10px", color: "#0f0d0d", fontWeight: "bolder" }}>
-              Shipping Partners:
+          <div style={{ marginBottom: "20px", textAlign: "center" }}>
+            <p
+              style={{
+                fontSize: "18px",
+                marginBottom: "12px",
+                color: "#0f0d0d",
+                fontWeight: "600",
+                letterSpacing: "0.5px"
+              }}
+            >
+              Shipping Partners
             </p>
 
-            <div style={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              gap: "15px",
-              fontSize: "13px",
-              fontWeight: "500"
-            }}>
-              <span>DTDC</span>
-              <span>Delhivery</span>
-              <span>Ecom Express</span>
-              <span>XpressBees</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                gap: "20px",
+                alignItems: "center"
+              }}
+            >
+              <img src="/dtdc-logo.jpg" style={{ height: "30px" }} />
+              <img src="/delhivery-logo.png" style={{ height: "30px" }} />
+              <img src="/fedex-logo.png" style={{ height: "30px" }} />
+              <img src="/bluedart-logo.png" style={{ height: "30px" }} />
             </div>
           </div>
 
