@@ -349,7 +349,7 @@ export function Header() {
 
       {/* Mobile Menu Dropdown - Horizontal Layout */}
       {mobileMenuOpen && (
-        <div className="fixed top-[calc(4rem+36px)] left-0 right-0 md:hidden bg-white border-b border-border z-40 shadow-lg">
+        <div className="absolute top-[calc(4rem+36px)] left-0 right-0 md:hidden bg-white border-b border-border z-40 shadow-lg">
           <nav className="px-4 py-4 space-y-3">
             {/* Login / Logout */}
             {currentUser ? (
