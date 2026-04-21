@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import { Header } from "@/components/Header"
 import Footer from "@/components/Footer"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -69,7 +68,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
 
       <main className="flex-1 container mx-auto px-4 py-16">
         <Card className="max-w-2xl mx-auto p-8">

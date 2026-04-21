@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -54,19 +55,21 @@ export default function Footer() {
               </a>
 
               {/* Youtube */}
-              <div style={{
-                backgroundColor: "#fc5b10",
-                color: "white",
-                borderRadius: "50%",
-                width: "42px",
-                height: "42px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "bold"
-              }}>
-                <FaYoutube />
-              </div>
+              <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                <div style={{
+                  backgroundColor: "#fc5b10",
+                  color: "white",
+                  borderRadius: "50%",
+                  width: "42px",
+                  height: "42px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: "bold"
+                }}>
+                  <FaYoutube />
+                </div>
+              </a>
 
               {/* X */}
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
@@ -160,12 +163,31 @@ export default function Footer() {
                 alignItems: "center"
               }}
             >
-              <img src="/razorpay-logo.png" style={{ height: "26px" }} />
-              <img src="/phonepe-logo.png" style={{ height: "26px" }} />
-              <img src="/gpay-logo.png" style={{ height: "26px" }} />
-              <img src="/mastercard-logo.jpg" style={{ height: "26px" }} />
-              <img src="/paytm-logo.jpg" style={{ height: "26px" }} />
-              <img src="/cred-logo.png" style={{ height: "26px" }} />
+
+              <a href="https://razorpay.com" target="_blank">
+                <img src="/razorpay-logo.png" style={{ height: "26px" }} />
+              </a>
+
+              <a href="https://www.phonepe.com" target="_blank">
+                <img src="/phonepe-logo.png" style={{ height: "26px" }} />
+              </a>
+
+              <a href="https://pay.google.com" target="_blank">
+                <img src="/gpay-logo.png" style={{ height: "26px" }} />
+              </a>
+
+              <a href="https://www.mastercard.co.in" target="_blank" rel="noopener noreferrer">
+                <img src="/mastercard-logo.jpg" style={{ height: "26px" }} />
+              </a>
+
+              <a href="https://www.paytm.com" target="_blank" rel="noopener noreferrer">
+                <img src="/paytm-logo.jpg" style={{ height: "26px" }} />
+              </a>
+
+              <a href="https://www.cred.club" target="_blank" rel="noopener noreferrer">
+                <img src="/cred-logo.png" style={{ height: "26px" }} />
+              </a>
+
             </div>
           </div>
 
@@ -192,10 +214,21 @@ export default function Footer() {
                 alignItems: "center"
               }}
             >
-              <img src="/dtdc-logo.jpg" style={{ height: "30px" }} />
-              <img src="/delhivery-logo.png" style={{ height: "30px" }} />
-              <img src="/fedex-logo.png" style={{ height: "30px" }} />
-              <img src="/bluedart-logo.png" style={{ height: "30px" }} />
+              <a href="https://www.dtdc.in" target="_blank" rel="noopener noreferrer">
+                <img src="/dtdc-logo.jpg" style={{ height: "30px" }} />
+              </a>
+
+              <a href="https://www.delhivery.com" target="_blank" rel="noopener noreferrer">
+                <img src="/delhivery-logo.png" style={{ height: "30px" }} />
+              </a>
+
+              <a href="https://www.fedex.com" target="_blank" rel="noopener noreferrer">
+                <img src="/fedex-logo.png" style={{ height: "30px" }} />
+              </a>
+
+              <a href="https://www.bluedart.com" target="_blank" rel="noopener noreferrer">
+                <img src="/bluedart-logo.png" style={{ height: "30px" }} />
+              </a>
             </div>
           </div>
 
@@ -217,10 +250,10 @@ export default function Footer() {
               </h3>
 
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>FAQ</li>
-                <li>Shipping</li>
-                <li>Returns</li>
-                <li>Contact Us</li>
+                <li><a href="/faq" className="hover:text-white">FAQ</a></li>
+                <li><a href="/shipping" className="hover:text-white">Shipping</a></li>
+                <li><a href="/returns" className="hover:text-white">Returns</a></li>
+                <li><a href="/contact" className="hover:text-white">Contact Us</a></li>
               </ul>
             </div>
 
@@ -231,8 +264,16 @@ export default function Footer() {
               </h3>
 
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>About Tony Amalfi</li>
-                <li>Brand</li>
+                <li>
+                  <Link href="/about" className="hover:text-white">
+                    About Tony Amalfi
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/brand" className="hover:text-white">
+                    Brand
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -243,8 +284,16 @@ export default function Footer() {
               </h3>
 
               <ul className="space-y-2 text-sm text-gray-400">
-                <li>Terms of Service</li>
-                <li>Privacy Policy</li>
+                <li>
+                  <Link href="/terms" className="hover:text-white">
+                    Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="hover:text-white">
+                    Privacy Policy
+                  </Link>
+                </li>
               </ul>
             </div>
 

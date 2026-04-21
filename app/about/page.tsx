@@ -1,5 +1,4 @@
 import React from "react"
-import { Header } from "@/components/Header"
 import Footer from "@/components/Footer"
 import { Card } from "@/components/ui/card"
 import Image from "next/image"
@@ -8,7 +7,7 @@ import Link from "next/link"
 export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
-      <Header />
+     
 
       <main className="flex-1 container mx-auto px-4 py-16">
         <Card className="max-w-5xl mx-auto p-8 md:p-12 rounded-2xl shadow-lg">
