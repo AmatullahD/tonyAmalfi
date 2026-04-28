@@ -59,7 +59,7 @@ export function Header() {
     <>
       {/* Promo Banner */}
       <div className="w-full bg-white border-b border-gray-200 py-2 flex items-center justify-center">
-        <span className="border border-gray-400 rounded-full px-5 py-1 text-xs font-medium tracking-wide text-gray-700">
+        <span className="rounded-full px-5 py-1 text-xs font-medium tracking-wide text-gray-700">
           Get ₹100 OFF on Prepaid Orders!
         </span>
       </div>
@@ -86,7 +86,7 @@ export function Header() {
                 {/* 👉 Shop page link */}
                 <Link
                   href="/shop"
-                  className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base"
+                  className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base cursor-pointer"
                 >
                   Shop
                 </Link>
@@ -101,33 +101,61 @@ export function Header() {
                 {/* 👉 Dropdown menu */}
                 {shopOpen && (
                   <div className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-md z-50">
-                    <Link href="/shop/Denim-Jackets" className="block px-4 py-2 hover:bg-gray-100">Denim Jackets</Link>
-                    <Link href="/shop/Pullover" className="block px-4 py-2 hover:bg-gray-100">Pullover</Link>
-                    <Link href="/shop/Jeans" className="block px-4 py-2 hover:bg-gray-100">Jeans</Link>
-                    <Link href="/shop/T-Shirts" className="block px-4 py-2 hover:bg-gray-100">T-Shirts</Link>
-                    <Link href="/shop/Shirts" className="block px-4 py-2 hover:bg-gray-100">Shirts</Link>
+                    <Link
+                      href="/shop/denim-jackets"
+                      onClick={() => setShopOpen(false)}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      Denim Jackets
+                    </Link>
+
+                    <Link
+                      href="/shop/pullovers"
+                      onClick={() => setShopOpen(false)}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      Pullovers
+                    </Link>
+
+                    <Link
+                      href="/shop/jeans"
+                      onClick={() => setShopOpen(false)}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      Jeans
+                    </Link>
+
+                    <Link
+                      href="/shop/t-shirts"
+                      onClick={() => setShopOpen(false)}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      T-Shirts
+                    </Link>
+
+                    <Link
+                      href="/shop/shirts"
+                      onClick={() => setShopOpen(false)}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                    >
+                      Shirts
+                    </Link>
                   </div>
                 )}
               </div>
-              <Link
-                href="/"
-                className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base"
-              >
-                Home
-              </Link>
+              <div className="flex gap-4 relative z-50">
+                <Link href="/" className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base cursor-pointer">
+                  Home
+                </Link>
 
-              <Link
-                href="/contact"
-                className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base"
-              >
-                Contact
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base"
-              >
-                About
-              </Link>
+                <Link href="/contact" className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base cursor-pointer">
+                  Contact
+                </Link>
+
+                <Link href="/about" className="text-sm font-medium uppercase tracking-wider hover:text-muted-foreground transition-base cursor-pointer">
+                  About
+                </Link>
+              </div>
               {currentUser && (
                 <Link
                   href="/orders"
@@ -174,21 +202,35 @@ export function Header() {
 
           {/* Mobile Layout */}
 
-          <div className="flex md:hidden items-center justify-between h-16 px-4">
+          <div className="flex md:hidden items-center h-16 px-4 relative">
 
-            {/* Left: Logo */}
-            <Link href="/" className="flex items-center z-10 -ml-2">
-              <img src="/logo.svg" alt="Tony Amalfi Logo" className="h-8 w-auto" />
-            </Link>
+            {/* Left: Menu */}
+            <div className="w-1/3 flex items-center justify-start">
+              <button
+                type="button"
+                className="w-10 h-10 flex items-center justify-center"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
 
-            {/* Right: Cart and Menu */}
-            <div className="flex items-center space-x-2 z-10">
+            {/* Center: Logo */}
+            <div className="w-1/3 flex items-center justify-center">
+              <Link href="/" className="flex items-center h-10">
+                <img
+                  src="/logo.svg"
+                  alt="Tony Amalfi Logo"
+                  className="h-7 w-auto object-contain"
+                />
+              </Link>
+            </div>
 
-
-              {/* Cart */}
+            {/* Right: Cart */}
+            <div className="w-1/3 flex items-center justify-end">
               <Link
                 href="/cart"
-                className="w-9 h-9 flex items-center justify-center hover:bg-secondary rounded-md transition-base relative"
+                className="w-10 h-10 flex items-center justify-center relative"
               >
                 <ShoppingBag className="h-5 w-5" />
                 {items.length > 0 && (
@@ -197,17 +239,8 @@ export function Header() {
                   </span>
                 )}
               </Link>
-
-              {/* Menu */}
-              <button
-                type="button"
-                className="w-9 h-9 flex items-center justify-center hover:bg-secondary rounded-md transition-base"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
-
             </div>
+
           </div>
         </div>
       </header>
@@ -397,11 +430,60 @@ export function Header() {
               {/* 👉 Dropdown items */}
               {shopOpen && (
                 <div className="mt-2 ml-3 flex flex-col space-y-2 text-sm">
-                  <Link href="/shop/Denim-Jackets" onClick={() => setMobileMenuOpen(false)}>Denim Jackets</Link>
-                  <Link href="/shop/Pullover" onClick={() => setMobileMenuOpen(false)}>Pullover</Link>
-                  <Link href="/shop/Jeans" onClick={() => setMobileMenuOpen(false)}>Jeans</Link>
-                  <Link href="/shop/T-Shirts" onClick={() => setMobileMenuOpen(false)}>T-Shirts</Link>
-                  <Link href="/shop/Shirts" onClick={() => setMobileMenuOpen(false)}>Shirts</Link>
+                  <Link
+                    href="/shop/denim-jackets"
+                    onClick={() => {
+                      setShopOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Denim Jackets
+                  </Link>
+
+                  <Link
+                    href="/shop/pullovers"
+                    onClick={() => {
+                      setShopOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Pullovers
+                  </Link>
+
+                  <Link
+                    href="/shop/jeans"
+                    onClick={() => {
+                      setShopOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Jeans
+                  </Link>
+
+                  <Link
+                    href="/shop/t-shirts"
+                    onClick={() => {
+                      setShopOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    T-Shirts
+                  </Link>
+
+                  <Link
+                    href="/shop/shirts"
+                    onClick={() => {
+                      setShopOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Shirts
+                  </Link>
                 </div>
               )}
             </div>

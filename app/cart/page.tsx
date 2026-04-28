@@ -14,7 +14,7 @@ export default function Cart() {
         {/* HEADER */}
         <div className="flex items-center justify-between p-4 border-b">
           <FiArrowLeft className="text-xl" />
-          <h3 className="font-semibold">CART</h3>
+          <h5 className="font-semibold"> YOUR CART</h5>
           <FaRegHeart className="text-xl" />
         </div>
 
@@ -92,7 +92,7 @@ export default function Cart() {
 
         {/* PRICE */}
         <div className="p-4 border-b">
-          <h2 className="font-semibold mb-3">PRICE DETAILS</h2>
+          <h5 className="font-semibold mb-3">PRICE DETAILS</h5>
 
           <div className="flex justify-between text-sm">
             <span>Total MRP</span>

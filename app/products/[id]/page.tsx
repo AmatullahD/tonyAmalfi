@@ -103,7 +103,7 @@ export default function ProductPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
-      
+
         <main className="flex-1 flex items-center justify-center">
           <p className="text-lg">Loading product...</p>
         </main>
@@ -115,7 +115,7 @@ export default function ProductPage() {
   if (!product) {
     return (
       <div className="min-h-screen flex flex-col">
-      
+
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Product not found</h1>
@@ -175,7 +175,7 @@ export default function ProductPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-    
+
 
       <main className="flex-1 container mx-auto px-4 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -230,12 +230,12 @@ export default function ProductPage() {
 
           {/* Product Info */}
           <div className="lg:sticky lg:top-8 lg:h-fit">
-            <h1 className="text-3xl lg:text-4xl font-bold mb-4">{product.title}</h1>
+            <h1 className="text-xl lg:text-2xl font-semibold mb-3">{product.title}</h1>
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-2">
-              <p className="text-3xl font-bold">₹{product.discountedPrice.toFixed(2)}</p>
-              <p className="text-xl text-gray-500 line-through">
+              <p className="text-xl font-semibold">₹{product.discountedPrice.toFixed(2)}</p>
+              <p className="text-sm text-gray-500 line-through">
                 MRP ₹{product.originalPrice.toFixed(2)}
               </p>
               <span className="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">
@@ -281,7 +281,7 @@ export default function ProductPage() {
 
                 {/* Wrapper with relative positioning and overflow visible */}
                 <div className="relative">
-                  <div className="flex gap-3 flex-wrap">
+                  <div className="flex gap-2 flex-wrap">
                     {product.sizeDetails.map((sizeDetail, index) => {
                       const isOutOfStock = isSizeOutOfStock(sizeDetail.size)
                       const isFirstSize = index === 0
@@ -293,7 +293,7 @@ export default function ProductPage() {
                             onMouseEnter={() => setHoveredSize(sizeDetail.size)}
                             onMouseLeave={() => setHoveredSize(null)}
                             disabled={isOutOfStock}
-                            className={`w-14 h-14 rounded-full border-2 font-semibold transition-all relative ${isOutOfStock
+                            className={`w-10 h-10 rounded-full border text-sm font-medium transition-all relative ${isOutOfStock
                               ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
                               : selectedSize === sizeDetail.size
                                 ? "border-black bg-black text-white"
@@ -301,6 +301,7 @@ export default function ProductPage() {
                               }`}
                           >
                             {sizeDetail.size}
+
                             {isOutOfStock && (
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="w-full h-0.5 bg-gray-400 rotate-45"></div>
@@ -308,22 +309,28 @@ export default function ProductPage() {
                             )}
                           </button>
 
-                          {/* Size Measurements Tooltip - FIXED positioning */}
+                          {/* Tooltip */}
                           {hoveredSize === sizeDetail.size && !isOutOfStock && (
                             <div
-                              className={`absolute z-10 top-full mt-2 bg-white border border-gray-200 shadow-xl rounded-lg p-4 w-56 animate-in fade-in slide-in-from-top-2 duration-200 ${isFirstSize ? 'left-0' : 'left-1/2 -translate-x-1/2'
+                              className={`absolute z-10 top-full mt-2 bg-white border border-gray-200 shadow-lg rounded-md p-3 w-48 ${isFirstSize ? "left-0" : "left-1/2 -translate-x-1/2"
                                 }`}
                               style={{
-                                maxWidth: 'calc(100vw - 2rem)',
+                                maxWidth: "calc(100vw - 2rem)",
                               }}
                             >
-                              <p className="font-semibold mb-2 text-center border-b pb-2">Size {sizeDetail.size}</p>
+                              <p className="font-medium mb-2 text-center border-b pb-1 text-sm">
+                                Size {sizeDetail.size}
+                              </p>
 
-                              <div className="space-y-2 text-sm">
+                              <div className="space-y-1 text-xs">
                                 {sizeDetail.measurements.map((measurement, idx) => (
                                   <div key={idx} className="flex justify-between">
-                                    <span className="text-gray-600">{measurement.name}:</span>
-                                    <span className="font-medium">{measurement.value}</span>
+                                    <span className="text-gray-600">
+                                      {measurement.name}:
+                                    </span>
+                                    <span className="font-medium">
+                                      {measurement.value}
+                                    </span>
                                   </div>
                                 ))}
                               </div>
@@ -353,20 +360,27 @@ export default function ProductPage() {
             )}
 
             {/* Quantity */}
-            <div className="mb-8">
-              <label className="text-sm font-medium uppercase tracking-wider block mb-3">Quantity</label>
-              <div className="flex items-center gap-4">
+            <div className="mb-6">
+              <label className="text-xs font-medium uppercase tracking-wide block mb-2">
+                Quantity
+              </label>
+
+              <div className="flex items-center gap-3">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-12 h-12 border-2 border-gray-300 hover:bg-gray-100 transition-colors font-bold text-xl rounded"
+                  className="w-9 h-9 border border-gray-300 hover:bg-gray-100 transition-colors text-base rounded"
                 >
                   −
                 </button>
-                <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
+
+                <span className="text-base font-medium w-8 text-center">
+                  {quantity}
+                </span>
+
                 <button
                   onClick={() => setQuantity(Math.min(availableStock, quantity + 1))}
                   disabled={quantity >= availableStock}
-                  className="w-12 h-12 border-2 border-gray-300 hover:bg-gray-100 transition-colors font-bold text-xl rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-9 h-9 border border-gray-300 hover:bg-gray-100 transition-colors text-base rounded disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   +
                 </button>
@@ -390,21 +404,25 @@ export default function ProductPage() {
             {/* Product Details */}
             <div className="border-t mt-8 pt-6 space-y-6">
               <div>
-                <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">Description</h3>
+                <h3 className="font-bold text-lg mb-2 uppercase tracking-wider">
+                  Description
+                </h3>
 
                 <p
-                  className={`text-sm text-gray-700 leading-relaxed md:line-clamp-none overflow-hidden ${showFullDesc ? "" : "max-h-[4.5em]"
+                  className={`text-sm text-gray-700 leading-relaxed transition-all duration-200 ${showFullDesc ? "" : "line-clamp-3"
                     }`}
                 >
                   {product.description}
                 </p>
 
-                <button
-                  onClick={() => setShowFullDesc(!showFullDesc)}
-                  className="text-sm text-black font-semibold mt-2 md:hidden"
-                >
-                  {showFullDesc ? "READ LESS" : "READ MORE"}
-                </button>
+                {product.description?.length > 120 && (
+                  <button
+                    onClick={() => setShowFullDesc(!showFullDesc)}
+                    className="text-sm text-black font-semibold mt-2 hover:underline"
+                  >
+                    {showFullDesc ? "READ LESS" : "READ MORE"}
+                  </button>
+                )}
               </div>
 
               {/* Only show Materials section if it exists and is not empty */}
@@ -438,11 +456,42 @@ export default function ProductPage() {
             </div>
           </div>
         </div>
+
+        <div className="mt-16">
+          <h2 className="text-lg font-medium mb-6 uppercase text-center tracking-wide">
+            Recommended for You
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {product.images.slice(0, 4).map((img, index) => (
+              <div key={index} className="group cursor-pointer">
+
+                <div className="overflow-hidden rounded-lg bg-gray-100">
+                  <img
+                    src={img}
+                    alt="Recommended Product"
+                    className="w-full h-[250px] md:h-[320px] object-cover group-hover:scale-105 transition duration-300"
+                  />
+                </div>
+
+                <div className="mt-2 text-center">
+                  <p className="text-sm text-gray-600">
+                    ₹{product.discountedPrice}
+                  </p>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+
         {/* ⭐ REVIEW SECTION */}
         <div className="mt-16">
           <ReviewSection />
         </div>
-        
+
       </main>
 
       {/* Image Zoom Modal (swipable + keyboard nav + arrows) */}

@@ -39,6 +39,7 @@ export default function NewInSection() {
 
   const CARD_PER_VIEW = 2;
 
+  // ✅ AUTOPLAY (clean, single source)
   useEffect(() => {
     const interval = setInterval(() => {
       if (!scrollRef.current) return;
@@ -46,22 +47,38 @@ export default function NewInSection() {
       const container = scrollRef.current;
       const cardWidth = container.offsetWidth / CARD_PER_VIEW;
 
-      let nextIndex = activeIndex + 1;
+      let next = activeIndex + 1;
 
-      if (nextIndex > products.length - CARD_PER_VIEW) {
-        nextIndex = 0;
+      if (next > products.length - CARD_PER_VIEW) {
+        next = 0;
       }
 
-      setActiveIndex(nextIndex);
+      setActiveIndex(next);
 
       container.scrollTo({
-        left: nextIndex * cardWidth,
+        left: next * cardWidth,
         behavior: "smooth",
       });
     }, 3000);
 
     return () => clearInterval(interval);
   }, [activeIndex]);
+
+  // ✅ SYNC DOT when user scrolls (important)
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const cardWidth = container.offsetWidth / CARD_PER_VIEW;
+      const index = Math.round(container.scrollLeft / cardWidth);
+      setActiveIndex(index);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section className="w-full py-8">
@@ -73,15 +90,12 @@ export default function NewInSection() {
       {/* Slider */}
       <div
         ref={scrollRef}
-        className="flex overflow-hidden px-4 gap-4"
+        className="flex overflow-x-auto scroll-smooth px-4 gap-4 no-scrollbar"
       >
         {products.map((item) => (
-          <div
-            key={item.id}
-            className="min-w-[50%] flex-shrink-0"
-          >
+          <div key={item.id} className="min-w-[50%] flex-shrink-0">
             <div className="bg-white rounded-xl overflow-hidden shadow-sm">
-              
+
               {/* IMAGE */}
               <div className="w-full h-[260px]">
                 <img
@@ -99,6 +113,7 @@ export default function NewInSection() {
                   {item.price}
                 </p>
               </div>
+
             </div>
           </div>
         ))}
@@ -108,13 +123,25 @@ export default function NewInSection() {
       <div className="flex justify-center mt-5 gap-2">
         {Array.from({
           length: products.length - (CARD_PER_VIEW - 1),
-        }).map((_, index) => (
-          <div
-            key={index}
-            className={`h-2 w-2 rounded-full transition-all ${
-              activeIndex === index
-                ? "bg-black scale-110"
-                : "bg-gray-300"
+        }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              if (!scrollRef.current) return;
+
+              const container = scrollRef.current;
+              const cardWidth = container.offsetWidth / CARD_PER_VIEW;
+
+              // ✅ instant jump on click
+              container.scrollTo({
+                left: i * cardWidth,
+                behavior: "smooth",
+              });
+
+              setActiveIndex(i);
+            }}
+            className={`h-2 w-2 rounded-full transition-all duration-200 ${
+              activeIndex === i ? "bg-black scale-110" : "bg-gray-300"
             }`}
           />
         ))}

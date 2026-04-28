@@ -209,25 +209,44 @@ export default function Footer() {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                flexWrap: "wrap",
-                gap: "20px",
-                alignItems: "center"
+                alignItems: "center",
+                gap: "16px",
+                flexWrap: "nowrap",      // ❌ no wrapping
+                overflowX: "auto",       // ✅ scroll on small screens
+                whiteSpace: "nowrap",
+                padding: "5px 0"
               }}
             >
               <a href="https://www.dtdc.in" target="_blank" rel="noopener noreferrer">
-                <img src="/dtdc-logo.jpg" style={{ height: "30px" }} />
+                <img
+                  src="/dtdc-logo.jpg"
+                  alt="dtdc"
+                  style={{ height: "22px", width: "auto", objectFit: "contain" }}
+                />
               </a>
 
               <a href="https://www.delhivery.com" target="_blank" rel="noopener noreferrer">
-                <img src="/delhivery-logo.png" style={{ height: "30px" }} />
+                <img
+                  src="/delhivery-logo.jpg"
+                  alt="delhivery"
+                  style={{ height: "22px", width: "auto", objectFit: "contain" }}
+                />
               </a>
 
               <a href="https://www.fedex.com" target="_blank" rel="noopener noreferrer">
-                <img src="/fedex-logo.png" style={{ height: "30px" }} />
+                <img
+                  src="/fedex-logo.png"
+                  alt="fedex"
+                  style={{ height: "22px", width: "auto", objectFit: "contain" }}
+                />
               </a>
 
               <a href="https://www.bluedart.com" target="_blank" rel="noopener noreferrer">
-                <img src="/bluedart-logo.png" style={{ height: "30px" }} />
+                <img
+                  src="/bluedart-logo.png"
+                  alt="bluedart"
+                  style={{ height: "22px", width: "auto", objectFit: "contain" }}
+                />
               </a>
             </div>
           </div>

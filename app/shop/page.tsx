@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import Footer from "@/components/Footer"
 import { ProductCard } from "@/components/ProductCard"
 import { getProducts, Product } from "@/lib/services/products"
+import Link from "next/link";
+
 
 export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -44,7 +46,7 @@ export default function ShopPage() {
         </section>
 
         {/* Products Grid */}
-        <section className="container mx-auto px-4 lg:px-8 pb-16 lg:pb-24">
+        <section className="max-w-5xl mx-auto px-4 lg:px-8 pb-16 lg:pb-24">
           {loading ? (
             <div className="text-center py-12">
               <p className="text-lg text-muted-foreground">Loading products...</p>
@@ -58,7 +60,7 @@ export default function ShopPage() {
               <p className="text-lg text-muted-foreground">No products available at the moment.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:gap-10">
               {products.map((product) => (
                 <ProductCard
                   key={product.id}

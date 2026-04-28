@@ -124,6 +124,8 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [activeBanner, isHoveringBanner]);
 
+
+
   const journalArticles = [
     {
       id: "golden-spines-bomber",
@@ -380,9 +382,24 @@ export default function Home() {
           {/* DOTS */}
           <div className="flex justify-center mt-4 gap-2">
             {journalBanners.map((_, i) => (
-              <div
+              <button
                 key={i}
-                className={`h-2 w-2 rounded-full ${activeSlide === i ? "bg-black scale-110" : "bg-gray-300"
+                onClick={() => {
+                  if (!sliderRef.current) return;
+
+                  const slider = sliderRef.current;
+                  const width = slider.offsetWidth;
+
+                  // 👉 force scroll to clicked slide
+                  slider.scrollTo({
+                    left: i * width,
+                    behavior: "smooth",
+                  });
+
+                  // 👉 update active dot
+                  setActiveSlide(i);
+                }}
+                className={`h-2 w-2 rounded-full transition-all duration-200 ${activeSlide === i ? "bg-black scale-110" : "bg-gray-300"
                   }`}
               />
             ))}
