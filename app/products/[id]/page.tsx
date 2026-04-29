@@ -128,8 +128,6 @@ export default function ProductPage() {
   }
 
   const discount = Math.round(((product.originalPrice - product.discountedPrice) / product.originalPrice) * 100)
-  const mainImages = product.images.slice(0, 4)
-  const additionalImages = product.images.slice(4)
   const availableStock = getAvailableStock()
 
   // navigation helpers
@@ -179,57 +177,48 @@ export default function ProductPage() {
 
       <main className="flex-1 container mx-auto px-4 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Image Gallery */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              {mainImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="aspect-[2/3] bg-gray-100 cursor-pointer overflow-hidden group relative"
-                  onClick={() => {
-                    setSelectedImage(index)
-                    setIsZoomed(true)
-                  }}
-                >
-                  <img
-                    src={image}
-                    alt={`${product.title} - View ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-transparent bg-opacity-0 group-hover:bg-opacity-10 transition-all flex items-center justify-center">
-                    <span className="text-white opacity-0 group-hover:opacity-100 text-sm font-medium">Click to zoom</span>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            {additionalImages.length > 0 && (
-              <div className="grid grid-cols-4 gap-4">
-                {additionalImages.map((image, index) => (
-                  <div
-                    key={index + 4}
-                    className="aspect-square bg-gray-100 cursor-pointer overflow-hidden group relative"
+          {/* Image Slider */}
+          <div className="w-full max-w-md md:max-w-lg lg:max-w-xl mx-auto">
+
+            <div
+              className="relative overflow-hidden aspect-[2/3] bg-transparent"
+              onPointerDown={onPointerDown}
+              onPointerUp={onPointerUp}
+            >
+              <div
+                className="flex transition-transform duration-500"
+                style={{ transform: `translateX(-${selectedImage * 100}%)` }}
+              >
+                {product.images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`${product.title} - ${index}`}
+                    className="w-full h-full flex-shrink-0 object-contain cursor-pointer p-2"
                     onClick={() => {
-                      setSelectedImage(index + 4)
+                      setSelectedImage(index)
                       setIsZoomed(true)
                     }}
-                  >
-                    <img
-                      src={image}
-                      alt={`${product.title} - View ${index + 5}`}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      loading="eager"
-                    />
-                    <div className="absolute inset-0 bg-transparent bg-opacity-0 group-hover:bg-opacity-10 transition-all" />
-                  </div>
+                  />
                 ))}
               </div>
-            )}
+              {/* Dots */}
+              <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {product.images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`h-2 w-2 rounded-full transition-all ${selectedImage === index ? "bg-white w-4" : "bg-gray-400"
+                      }`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Product Info */}
-          <div className="lg:sticky lg:top-8 lg:h-fit">
+          <div className="lg:sticky lg:top-6 lg:h-fit">
             <h1 className="text-xl lg:text-2xl font-semibold mb-3">{product.title}</h1>
 
             {/* Price */}
@@ -398,7 +387,7 @@ export default function ProductPage() {
               {addedToCart ? "✓ Added to Cart!" : availableStock === 0 ? "Out of Stock" : "ADD TO BAG"}
             </Button>
 
-            {/* Product Details */}
+
 
 
             {/* Product Details */}
